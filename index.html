@@ -1,0 +1,114 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>WDV321 Advanced Javascript - Form Validation JQuery Example</title>
+
+    <style>
+        label {
+            width: 150px;
+            display: inline-block;
+        }
+    </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+
+
+
+
+    <script>
+
+
+
+        function validateCode(inName,inCode) {
+            var validForm = true;	//set valid flag to true, assume form is valid
+
+         
+
+              //validate customer name field.  Field is required
+              var inName = $("#custName").val();	
+            $("#custNameError").html("");	//field value is good, remove any error messages				
+            if (!inName) {
+                $("#custNameError").html("Please enter your name.");
+                validForm = false;
+            }
+
+            //validate customer ZipCode.  Field is required, must be numeric, must be 10 characters
+            var inCode = $("#custCode").val();	//get the input value of the Code field
+            $("#custCodeError").html("");			//set error message back to empty, assume field is valid	
+            if (!inCode) {
+                $("#custCodeError").html("Please enter your ZipCode.");
+                validForm = false;
+            }
+            else {
+                //if( !$.isNumeric(inCode) || Math.round(inCode) != inCode )	//if the value is NOT numerice OR not an integer.	Rounding technique
+                if (!$.isNumeric(inCode) || (inCode % 1 != 0))				//if the value is NOT numerice OR not an integer.	Modulus technique			
+                {
+                    $("#custCodeError").html("Please enter a number");
+                    validForm = false;
+                }
+                else {
+                    if (inCode.length != 5) {
+                        $("#custCodeError").html("Please enter a five digit zip code");
+                        validForm = false;
+                    }
+                
+                }
+            }
+
+            //ALL VALIDATIONS ARE COMPLETE.  If all of the fields are valid we can submit the form.  Otherwise display the errors
+
+
+        }; //end sendform.click
+
+
+
+	//end .ready
+    
+    var word = 123456;
+    var reg = /.{2}$/g;
+ Console.log(reg);
+    </script>
+</head>
+
+
+<body onload="validateCode">
+
+    <h2>WDV321 Advanced Javascript </h2>
+    <h3>Form Validation - JQuery Coding Example</h3>
+    <form id="applicationForm" name="applicationForm" method="post" action="">
+        <p>Please enter the following information in order to process your Application</p>
+        <p>&nbsp;</p>
+        <p>
+            <label for="custName">Name:</label>
+            <input type="text" name="custName" id="custName" />
+            <span id="custNameError" class="errorMsg"></span>
+        </p>
+        <p>
+            <label for="custCode">ZipCode:</label>
+            <input type="text" name="custCode" id="custCode" />
+            <span id="custCodeError" class="errorMsg"></span>
+            <span style="font-size:small"><em>(99999)</em></span>
+        </p>
+        <p>
+            <input type="button" name="button" id="sendForm" value="Apply Now" onclick="validateCode()" />
+            <input type="reset" name="button2" id="button2" value="Reset" />
+        </p>
+    </form>
+    <p>This page uses JQuery and Javascript to validate the form fields. The validation process will validate each field
+        every time the form is submitted. </p>
+    <p>The validation enforces the following rules for the ZipCode field: Required Value, Must Be Numeric and Must
+        have 10 characters.</p>
+    <p>When checking to see if the value that was entered is Numeric we have to account for decimal values such as
+        12345.6789. There are two techniques in the codes for validating that the ZipCode field is only integers.
+        One technique rounds the value to the nearest whole number and then compares the modified value to the original
+        value. Example Math.round(inCode) == inCode. If they are the same then the value is an integer if not there are
+        problems.</p>
+    <p>The other technique uses the Modulus operation % to see if the remainder is zero. Example inCode % 1 == 0. If the
+        remainder is 0 the value is an integer. If not the value is not an integer and not allowed.</p>
+</body>
+
+</html>
